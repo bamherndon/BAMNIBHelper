@@ -1,0 +1,10 @@
+# Data snapshots — contain wholesale costs, margins, and sales figures.
+# Regenerate with the nib-replenishment skill; never commit.
+*.csv
+*.json
+!.claude/settings.json
+
+# Local Claude Code state
+.claude/settings.local.json
+.claude/settings.local.json.tmp.*
+*.tmp.*
