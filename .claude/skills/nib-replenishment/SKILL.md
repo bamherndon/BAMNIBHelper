@@ -162,6 +162,16 @@ string data]`). Use `read_page` / `get_page_text` there instead.
 Order cards truncate their line items, so open each open order individually to
 get full quantities. Quantities are in **cases** — multiply by pack size.
 
+**Heartland cannot substitute for this.** POs are created there only when a
+shipment is *received*, so anything ordered-but-not-yet-arrived does not exist
+in Heartland. The orders page is the only source.
+
+Consequence: **the scheduled weekly job cannot do this step** (no browser), so
+it ignores open orders entirely and says so at the top of its email. An
+interactive run should always do it — that is a large part of why running
+interactively is worth it. Never carry a stale `inbound*.json` forward between
+runs; re-read the orders page every time.
+
 Statuses on the list page have been wrong before; confirm with the user which
 orders are genuinely open rather than assuming. Write the result as:
 

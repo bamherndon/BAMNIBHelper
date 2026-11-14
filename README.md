@@ -22,6 +22,21 @@ velocity and on-hand inventory.
 Data CSVs are gitignored — they hold wholesale costs and sales figures, and
 they're reproducible by re-running the skill.
 
+## Scheduled run
+
+A crontab entry runs `scripts/weekly_run.sh` on Sundays at 1:07pm ET. It pulls
+Heartland, fetches the catalog, computes the buy list, and emails it.
+
+Two things it deliberately does **not** do, because a headless session has no
+browser:
+
+- **Build the cart.** That stays an interactive step.
+- **Account for open orders on the NIB Shopify site.** Already-ordered sets will
+  still show as needed. Heartland is not a fallback here — POs are only created
+  there once a shipment is received. The email leads with this caveat.
+
+On failure it emails a `FAILED` notice rather than going quiet.
+
 ## The math
 
 ```
