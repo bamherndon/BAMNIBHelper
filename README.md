@@ -4,6 +4,12 @@ Replenishment tooling for a Bricks & Minifigs store. Decides what to reorder fro
 the corporate NIB Shopify catalog by joining it against Heartland Retail sales
 velocity and on-hand inventory.
 
+## Prerequisites
+
+- **[HeartlandMCP](https://github.com/bamherndon/HeartlandMCP)** — required.
+  All sales velocity and on-hand inventory data comes from it.
+- Claude Code with Chrome browser automation, for the corporate Shopify side.
+
 ## What's here
 
 ```

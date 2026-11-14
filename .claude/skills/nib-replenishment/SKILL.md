@@ -10,6 +10,23 @@ a buy list sized to N months of demand. Default target: **2 months**.
 
 Scripts live in `scripts/` next to this file. Run them with `python3`; no deps.
 
+## Prerequisites
+
+**The Heartland MCP server must be installed and connected.** Every sales and
+inventory figure in this workflow comes from it; without it only the Shopify half
+of the join is possible and the skill cannot produce a buy list.
+
+Source: <https://github.com/bamherndon/HeartlandMCP>
+
+Check for `mcp__heartland-retail__*` tools before starting — `list_locations` is
+a cheap probe. If they're absent, say so and stop rather than guessing at
+velocity or on-hand numbers.
+
+Also required:
+- Chrome browser automation (`mcp__claude-in-chrome__*`) for the Shopify side.
+- An authenticated browser session on the corporate site. The user logs in
+  manually; don't attempt it.
+
 ## Parameters to confirm first
 
 | Thing | Default | Notes |
