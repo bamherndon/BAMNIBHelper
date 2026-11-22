@@ -44,6 +44,10 @@ collection, the catalog JSON path, and whether the catalog fetch succeeded.
 4. **Compute.** Run `scripts/build_reorder.py --target-months 2` with no
    `--inbound` argument.
 5. **Email** the summary to the address in the RUN CONTEXT.
+6. **Only after the email is actually sent**, `touch` the `success_marker` path
+   from the RUN CONTEXT. The wrapper treats a missing marker as failure no
+   matter what you wrote or what exit code it saw, so never create it early,
+   and never create it if the email did not go out.
 
 ## Email — success
 
