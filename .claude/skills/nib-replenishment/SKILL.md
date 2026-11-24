@@ -237,6 +237,44 @@ Typically there are far more sold-out shortfalls than buyable ones (253 vs 6 on
 Cheap polybag/mini-build multipacks (`30xxx`, 30-packs at ~$3.50–4.00/unit) are
 consistently the top performers — flag them first.
 
+## Step 7 — floor sections (clearance / oldie but goodie)
+
+`scripts/build_sections.py --heartland merged.json --outdir . --date <YYYY-MM-DD>`
+splits slow stock two ways. The split is not cosmetic:
+
+- **Clearance** — nothing sold this year. A pricing problem.
+- **Oldie but Goodie** — sold this year, then went quiet 120+ days. Proven
+  demand, so a re-merchandising problem, not a discount one.
+
+**A set that sold once two years ago is Clearance, not an oldie-but-goodie.**
+The test is sales inside the measured window, not "has ever sold".
+
+Guards that matter, each one learned from a wrong answer:
+
+- `--min-shelf-days 30` — days-since-received **resets on restock**, so a
+  long-dead SKU that was just re-received looks new. Home Alone showed 410 days
+  quiet but 7 days since receipt; it belongs in neither list yet.
+- `--min-dead-days 150` — a never-sold set needs a full season before being
+  called dead. This also keeps a recent big drop out of Clearance until after
+  its first holiday, and lets it fall in on its own once it ages past the
+  threshold. No cohort list to maintain.
+- A SKU quiet for 2x `--quiet-days` counts as dead even if recently re-received.
+
+Margin is ~18% (cost/retail 0.8156, verified against item records), so there is
+very little markdown room — see the pricing note below.
+
+## Pricing reality
+
+Retail is set at LEGO's own MSRP. Verified on 42239 Batmobile Tumbler:
+lego.com $189.99, our price $189.99, our cost $154.96. That is **18.4% margin**,
+so "at cost" *is* an 18% discount, and anything past ~18% off sells at a loss.
+
+Consequence: small markdowns do not work on this inventory. For stock that has
+already been red-tagged once and still has not moved, selling at cost to free
+the capital beats shaving another 10% — dead stock returns nothing, while the
+department turns 3.2x/yr, so each dollar freed earns roughly $0.73/yr in gross
+profit.
+
 ## Things that will mislead you
 
 - **`get_item_sales_velocity` is a trap.** Its `avg_qty_per_month` divides by
